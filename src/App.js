@@ -1,12 +1,13 @@
-import { useState } from 'react';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [result, setResult] = useState(null);
 
-  function resetInput() {
-    setInput('');
+  function resetInput(e) {
+    e.preventDefault();
+    setInput("");
   }
 
   function resetResult(e) {
@@ -16,10 +17,11 @@ function App() {
 
   function handleCalclate(calcFn, e) {
     e.preventDefault();
+    if (input === "") return;
     setResult((result) =>
-      result === null ? Number(input) : calcFn(result, Number(input)),
+      result === null ? Number(input) : calcFn(Number(result), Number(input))
     );
-    resetInput();
+    resetInput(e);
   }
   return (
     <div className="App">
@@ -27,7 +29,7 @@ function App() {
         <h1>Simplest Working Calculator</h1>
       </div>
       <form>
-        <p>{result ?? 'Please input your number'}</p>
+        <p>{result ?? "Please input your number"}</p>
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -45,8 +47,8 @@ function App() {
         <button
           onClick={(e) =>
             handleCalclate(
-              (a, b) => (b === 0 ? 'ERROR: COULD DIVIDE ZERO' : a / b),
-              e,
+              (a, b) => (b === 0 ? "ERROR: COULDNOT DIVIDE ZERO" : a / b),
+              e
             )
           }
         >
